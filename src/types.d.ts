@@ -3,5 +3,7 @@ type EisenRecord = {
     title: string;
     description: string;
     endDate: Date;
-    severity: 'none' | 'high' | 'medium' | 'low' = 'none';
+    importance: Importance;
 }
+
+type Importance = 'none' | 'high' | 'medium' | 'low';
