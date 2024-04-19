@@ -6,6 +6,7 @@
 		id: 0,
 		title: '',
 		description: '',
+		requiredTime: 'minutes',
 		endDate: new Date(Date.now()),
 		importance: 'none'
 	};
@@ -15,26 +16,60 @@
 	}
 
 	$: dateStr = eisenRecord.endDate.toJSON().slice(0, 10);
-	$: eisenRecord.importance = importance
+	$: eisenRecord.importance = importance;
 </script>
 
 <form class="grid w-96 m-4">
 	<h1 class="text-lg font-bold">New Record</h1>
 	<div class="">
 		<label for="title">Title</label>
-		<input type="text" id="title" class="block w-full border rounded-lg" value={eisenRecord.title} />
+		<input
+			type="text"
+			id="title"
+			class="block w-full border rounded-lg"
+			value={eisenRecord.title}
+		/>
 	</div>
 	<div>
 		<label for="description">Description</label>
-		<textarea id="description" class="block w-full border rounded-lg resize-none" value={eisenRecord.description}></textarea>
+		<textarea
+			id="description"
+			class="block w-full border rounded-lg resize-none"
+			value={eisenRecord.description}
+		></textarea>
+	</div>
+	<div>
+		<label for="required-time">Required Time</label>
+		<select
+			id="required-time"
+			class="block w-full p-2 bg-white border rounded-lg"
+			bind:value={eisenRecord.requiredTime}
+		>
+			<option value="seconds">seconds</option>
+			<option value="minutes">minutes</option>
+			<option value="hours">hours</option>
+			<option value="days">days</option>
+			<option value="weeks">weeks</option>
+			<option value="months">months</option>
+		</select>
 	</div>
 	<div>
 		<label for="endDate">end date</label>
-		<input type="date" id="endDate" class="block border rounded-lg" value={dateStr} on:input={dateInputChange} />
+		<input
+			type="date"
+			id="endDate"
+			class="block border rounded-lg"
+			value={dateStr}
+			on:input={dateInputChange}
+		/>
 	</div>
 	<div>
 		<label for="urgency">Urgency</label>
-		<select id="urgency" class="block w-full p-2 bg-white border rounded-lg" bind:value={eisenRecord.importance}>
+		<select
+			id="urgency"
+			class="block w-full p-2 bg-white border rounded-lg"
+			bind:value={eisenRecord.importance}
+		>
 			<option value="none"></option>
 			<option value="high">High</option>
 			<option value="medium">Medium</option>
