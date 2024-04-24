@@ -8,7 +8,7 @@
 		description: '',
 		requiredTime: 'minutes',
 		endDate: new Date(Date.now()),
-		importance: 'none'
+		importance: 'low'
 	};
 
 	function dateInputChange(e: any) {
@@ -70,9 +70,9 @@
 			class="block w-full p-2 bg-white border rounded-lg"
 			bind:value={eisenRecord.importance}
 		>
-			<option value="none"></option>
+			<!-- <option value="none"></option> -->
 			<option value="high">High</option>
-			<option value="medium">Medium</option>
+			<!-- <option value="medium">Medium</option> -->
 			<option value="low">Low</option>
 		</select>
 	</div>

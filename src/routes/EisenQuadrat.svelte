@@ -33,7 +33,7 @@
 	}
 
 	$: wichtigNotDringend = todoRecords.filter(
-		(ele) => (ele.importance == 'medium') && !isUrgent(ele)
+		(ele) => (ele.importance == 'high') && !isUrgent(ele)
 	);
 	$: wichtigDringed = todoRecords.filter((ele) => (ele.importance == 'high') && isUrgent(ele));
 	$: notWichtigDringend = todoRecords.filter((ele) => (ele.importance == 'low') && isUrgent(ele));
@@ -68,7 +68,7 @@
 						<h1>{record.title}</h1>
 					</div>
 				{/each}
-				<NewItemButton on:click={() => showFormular('none')} />
+				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigDringend as record}

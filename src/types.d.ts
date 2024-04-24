@@ -7,6 +7,7 @@ type EisenRecord = {
     importance: Importance;
 }
 
-type Importance = 'none' | 'high' | 'medium' | 'low';
+// type Importance = 'none' | 'high' | 'medium' | 'low';
+type Importance = 'high' | 'low';
 
 type RequiredTime = 'seconds' | 'minutes'| 'hours' | 'days' | 'weeks' | 'months';
