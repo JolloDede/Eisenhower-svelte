@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let importance: Importance;
 	export let formClose: Function;
+	export let saveRecord: Function;
 
 	let eisenRecord: EisenRecord = {
 		id: 0,
@@ -77,7 +78,7 @@
 		</select>
 	</div>
 	<div class="flex justify-end pt-4">
-		<button on:click={() => formClose()} class="bg-blue-400 p-2 border rounded-lg">Create</button>
+		<button on:click={() => saveRecord(eisenRecord)} class="bg-blue-400 p-2 border rounded-lg">Create</button>
 		<button on:click={() => formClose()} class="p-2 border rounded-lg">Cancel</button>
 	</div>
 </form>

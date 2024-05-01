@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { NewItemButton } from '$lib';
+	import { json } from '@sveltejs/kit';
 
 	export let todoRecords: EisenRecord[];
 	export let showFormular: Function;

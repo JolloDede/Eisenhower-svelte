@@ -22,6 +22,12 @@
 		showModal = true;
 	}
 
+	function handleNewEisenRecordSave(newRecord: EisenRecord) {
+		// change the id to someting random
+		todoRecords[todoRecords.length] = newRecord;
+		formClose();
+	}
+
 	function formClose() {
 		close = true;
 	}
@@ -29,10 +35,10 @@
 
 <div class="m-auto w-4/5">
 	<div class="">
-		<h1>Einsenhower</h1>
-		<EisenQuadrat {showFormular} {todoRecords} />
+		<h1>Eisenhower</h1>
+		<EisenQuadrat {showFormular} bind:todoRecords={todoRecords} />
 	</div>
 	<Modal bind:showModal bind:close>
-		<NewEisenRecordForm {importance} {formClose} />
+		<NewEisenRecordForm {importance} {formClose} saveRecord={handleNewEisenRecordSave} />
 	</Modal>
 </div>
