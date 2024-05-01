@@ -2,6 +2,7 @@
 	export let importance: Importance;
 	export let formClose: Function;
 	export let saveRecord: Function;
+	export let open: boolean;
 
 	let eisenRecord: EisenRecord = {
 		id: 0,
@@ -16,8 +17,24 @@
 		eisenRecord.endDate = e.target.value || eisenRecord.endDate;
 	}
 
+	function clearRecord(open: boolean) {
+		if (open == true) {
+			eisenRecord = {
+				id: 0,
+				title: '',
+				description: '',
+				requiredTime: 'minutes',
+				endDate: new Date(Date.now()),
+				importance: 'low'
+			};
+		}
+	}
+
 	$: dateStr = eisenRecord.endDate.toJSON().slice(0, 10);
 	$: eisenRecord.importance = importance;
+	$: {
+		clearRecord(open);
+	}
 </script>
 
 <form class="grid w-96 m-4">
@@ -28,7 +45,7 @@
 			type="text"
 			id="title"
 			class="block w-full border rounded-lg"
-			value={eisenRecord.title}
+			bind:value={eisenRecord.title}
 		/>
 	</div>
 	<div>
@@ -36,7 +53,7 @@
 		<textarea
 			id="description"
 			class="block w-full border rounded-lg resize-none"
-			value={eisenRecord.description}
+			bind:value={eisenRecord.description}
 		></textarea>
 	</div>
 	<div>
@@ -78,7 +95,9 @@
 		</select>
 	</div>
 	<div class="flex justify-end pt-4">
-		<button on:click={() => saveRecord(eisenRecord)} class="bg-blue-400 p-2 border rounded-lg">Create</button>
+		<button on:click={() => saveRecord(eisenRecord)} class="bg-blue-400 p-2 border rounded-lg"
+			>Create</button
+		>
 		<button on:click={() => formClose()} class="p-2 border rounded-lg">Cancel</button>
 	</div>
 </form>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { NewItemButton } from '$lib';
 	import { json } from '@sveltejs/kit';
+	import EisenRecordComp from './EisenRecordComp.svelte';
 
 	export let todoRecords: EisenRecord[];
 	export let showFormular: Function;
@@ -33,14 +34,11 @@
 		return false;
 	}
 
-	$: wichtigNotDringend = todoRecords.filter(
-		(ele) => (ele.importance == 'high') && !isUrgent(ele)
-	);
-	$: wichtigDringed = todoRecords.filter((ele) => (ele.importance == 'high') && isUrgent(ele));
-	$: notWichtigDringend = todoRecords.filter((ele) => (ele.importance == 'low') && isUrgent(ele));
-	$: notWichtigNotDringend = todoRecords.filter(
-		(ele) => (ele.importance == 'low') && !isUrgent(ele)
-	);
+	$: wichtigNotDringend = todoRecords.filter((ele) => ele.importance == 'high' && !isUrgent(ele));
+	$: wichtigDringed = todoRecords.filter((ele) => ele.importance == 'high' && isUrgent(ele));
+	$: notWichtigDringend = todoRecords.filter((ele) => ele.importance == 'low' && isUrgent(ele));
+	$: notWichtigNotDringend = todoRecords.filter((ele) => ele.importance == 'low' && !isUrgent(ele));
+	// $: console.log("Qudarat"+JSON.stringify(todoRecords));
 </script>
 
 <div class="flex mt-4">
@@ -49,33 +47,25 @@
 		<div class="grid grid-cols-2 w-full">
 			<div class="border min-h-40">
 				{#each wichtigNotDringend as record}
-					<div class="hover:bg-gray-50">
-						<h1>{record.title}</h1>
-					</div>
+					<EisenRecordComp bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each wichtigDringed as record}
-					<div class="hover:bg-gray-50">
-						<h1>{record.title}</h1>
-					</div>
+					<EisenRecordComp bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigNotDringend as record}
-					<div class="hover:bg-gray-50">
-						<h1>{record.title}</h1>
-					</div>
+					<EisenRecordComp bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigDringend as record}
-					<div class="hover:bg-gray-50">
-						<h1>{record.title}</h1>
-					</div>
+					<EisenRecordComp bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
