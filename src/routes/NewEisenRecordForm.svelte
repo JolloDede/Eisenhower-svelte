@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { todoRecords } from "../store";
+
 	export let importance: Importance;
 	export let formClose: Function;
-	export let saveRecord: Function;
-	export let open: boolean;
 
 	let eisenRecord: EisenRecord = {
 		id: 0,
@@ -17,24 +17,28 @@
 		eisenRecord.endDate = e.target.value || eisenRecord.endDate;
 	}
 
-	function clearRecord(open: boolean) {
-		if (open == true) {
+	function clearRecord() {
 			eisenRecord = {
 				id: 0,
 				title: '',
 				description: '',
 				requiredTime: 'minutes',
 				endDate: new Date(Date.now()),
-				importance: 'low'
+				importance: importance,
 			};
-		}
+	}
+
+	function saveRecord() {
+		// change the id to someting random
+		todoRecords.update((records) => {
+			return [...records, { ...eisenRecord }];
+		});
+		clearRecord();
+		formClose();
 	}
 
 	$: dateStr = eisenRecord.endDate.toJSON().slice(0, 10);
 	$: eisenRecord.importance = importance;
-	$: {
-		clearRecord(open);
-	}
 </script>
 
 <form class="grid w-96 m-4">
@@ -95,7 +99,7 @@
 		</select>
 	</div>
 	<div class="flex justify-end pt-4">
-		<button on:click={() => saveRecord(eisenRecord)} class="bg-blue-400 p-2 border rounded-lg"
+		<button on:click={() => saveRecord()} class="bg-blue-400 p-2 border rounded-lg"
 			>Create</button
 		>
 		<button on:click={() => formClose()} class="p-2 border rounded-lg">Cancel</button>

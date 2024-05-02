@@ -8,6 +8,7 @@
 	let wichtigDringed: EisenRecord[];
 	let notWichtigNotDringend: EisenRecord[];
 	let notWichtigDringend: EisenRecord[];
+	
 	todoRecords.subscribe((records) => {
 		wichtigNotDringend = records.filter((ele) => ele.importance == 'high' && !isUrgent(ele));
 		wichtigDringed = records.filter((ele) => ele.importance == 'high' && isUrgent(ele));
