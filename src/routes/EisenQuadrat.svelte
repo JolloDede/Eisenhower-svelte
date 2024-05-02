@@ -1,14 +1,19 @@
 <script lang="ts">
 	import { NewItemButton } from '$lib';
-	import { json } from '@sveltejs/kit';
 	import EisenRecordComp from './EisenRecordComp.svelte';
+	import { todoRecords } from '../store';
 
-	export let todoRecords: EisenRecord[];
 	export let showFormular: Function;
 	let wichtigNotDringend: EisenRecord[];
 	let wichtigDringed: EisenRecord[];
 	let notWichtigNotDringend: EisenRecord[];
 	let notWichtigDringend: EisenRecord[];
+	todoRecords.subscribe((records) => {
+		wichtigNotDringend = records.filter((ele) => ele.importance == 'high' && !isUrgent(ele));
+		wichtigDringed = records.filter((ele) => ele.importance == 'high' && isUrgent(ele));
+		notWichtigDringend = records.filter((ele) => ele.importance == 'low' && isUrgent(ele));
+		notWichtigNotDringend = records.filter((ele) => ele.importance == 'low' && !isUrgent(ele));
+	});
 
 	function isUrgent(record: EisenRecord): boolean {
 		switch (record.requiredTime) {
@@ -33,12 +38,6 @@
 		}
 		return false;
 	}
-
-	$: wichtigNotDringend = todoRecords.filter((ele) => ele.importance == 'high' && !isUrgent(ele));
-	$: wichtigDringed = todoRecords.filter((ele) => ele.importance == 'high' && isUrgent(ele));
-	$: notWichtigDringend = todoRecords.filter((ele) => ele.importance == 'low' && isUrgent(ele));
-	$: notWichtigNotDringend = todoRecords.filter((ele) => ele.importance == 'low' && !isUrgent(ele));
-	// $: console.log("Qudarat"+JSON.stringify(todoRecords));
 </script>
 
 <div class="flex mt-4">
