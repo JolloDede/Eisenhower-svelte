@@ -1,6 +1,7 @@
 import { persisted } from "svelte-persisted-store";
+import { get } from "svelte/store";
 
-let STORAGE_KEY = 'Eisenhover_app-';
+let STORAGE_KEY = 'Eisenhover-app-';
 let currentDate = new Date();
 
 export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
@@ -9,7 +10,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'High Today',
         description: 'test desc',
         requiredTime: 'hours',
-        endDate: new Date(),
+        endDateStr: JSON.stringify(currentDate),
         importance: 'high'
     },
     {
@@ -17,7 +18,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Low Today',
         description: 'test desc',
         requiredTime: 'hours',
-        endDate: new Date(),
+        endDateStr: JSON.stringify(currentDate),
         importance: 'low'
     },
     {
@@ -25,7 +26,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'High Weekago',
         description: 'test desc',
         requiredTime: 'hours',
-        endDate: new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+        endDateStr: JSON.stringify(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
         importance: 'high'
     },
     {
@@ -33,7 +34,15 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Low Weekago',
         description: 'test desc',
         requiredTime: 'hours',
-        endDate: new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+        endDateStr: JSON.stringify(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
         importance: 'low'
     }
-])
+]);
+
+export const recordIndex = persisted(STORAGE_KEY + 'record-id', 5);
+
+export function newRecordIndex(): number {
+    let newVal = get(recordIndex)+1
+    recordIndex.set(newVal);
+    return newVal;
+}

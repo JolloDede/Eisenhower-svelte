@@ -3,29 +3,10 @@
 
 	export let importance: Importance;
 	export let formClose: Function;
-
-	let eisenRecord: EisenRecord = {
-		id: 0,
-		title: '',
-		description: '',
-		requiredTime: 'minutes',
-		endDate: new Date(Date.now()),
-		importance: 'low'
-	};
+	export let eisenRecord: EisenRecord;
 
 	function dateInputChange(e: any) {
-		eisenRecord.endDate = e.target.value || eisenRecord.endDate;
-	}
-
-	function clearRecord() {
-			eisenRecord = {
-				id: 0,
-				title: '',
-				description: '',
-				requiredTime: 'minutes',
-				endDate: new Date(Date.now()),
-				importance: importance,
-			};
+		eisenRecord.endDateStr = e.target.value || eisenRecord.endDateStr;
 	}
 
 	function saveRecord() {
@@ -33,11 +14,10 @@
 		todoRecords.update((records) => {
 			return [...records, { ...eisenRecord }];
 		});
-		clearRecord();
 		formClose();
 	}
 
-	$: dateStr = eisenRecord.endDate.toJSON().slice(0, 10);
+	$: dateStr = eisenRecord.endDateStr.toJSON().slice(0, 10);
 	$: eisenRecord.importance = importance;
 </script>
 
@@ -45,10 +25,12 @@
 	<h1 class="text-lg font-bold">New Record</h1>
 	<div class="">
 		<label for="title">Title</label>
+		<!-- svelte-ignore a11y-autofocus -->
 		<input
 			type="text"
 			id="title"
 			class="block w-full border rounded-lg"
+			autofocus
 			bind:value={eisenRecord.title}
 		/>
 	</div>

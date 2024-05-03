@@ -1,30 +1,49 @@
 <script lang="ts">
-	import Modal from '$lib/Modal.svelte';
 	import EisenQuadrat from './EisenQuadrat.svelte';
-	import NewEisenRecordForm from './NewEisenRecordForm.svelte';
+	import EisenRecordComponent from './EisenRecordComponent.svelte';
 
-	let showModal = false;
-	let importance: Importance = 'low';
-	let close = false;
+	let show = false;
+	let selectedRecord: EisenRecord = {
+		id: 0,
+		title: '',
+		description: '',
+		endDateStr: new Date().toJSON(),
+		importance: 'low',
+		requiredTime: 'minutes'
+	};
 
 	function showFormular(urg: Importance) {
-		importance = urg;
-		showModal = true;
-		close = false;
+		clearRecord();
+		selectedRecord.importance = urg;
+		show = true;
+	}
+
+	function clearRecord() {
+		selectedRecord = {
+			id: 0,
+			title: '',
+			description: '',
+			requiredTime: 'minutes',
+			endDateStr: new Date().toJSON(),
+			importance: 'low'
+		};
 	}
 
 	function formClose() {
-		showModal = false;
-		close = true;
+		clearRecord();
+		show = false;
+	}
+
+	function handleRecordInspect(record: EisenRecord) {
+		selectedRecord = record;
+		show = true;
 	}
 </script>
 
 <div class="m-auto w-4/5">
 	<div class="">
 		<h1>Eisenhower</h1>
-		<EisenQuadrat {showFormular} />
+		<EisenQuadrat {showFormular} {handleRecordInspect} />
 	</div>
-	<Modal bind:showModal bind:close>
-		<NewEisenRecordForm {importance} {formClose} />
-	</Modal>
+	<EisenRecordComponent bind:record={selectedRecord} bind:show />
 </div>

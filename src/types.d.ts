@@ -3,7 +3,7 @@ type EisenRecord = {
     title: string;
     description: string;
     requiredTime: RequiredTime;
-    endDate: Date;
+    endDateStr: string;
     importance: Importance;
 }
 

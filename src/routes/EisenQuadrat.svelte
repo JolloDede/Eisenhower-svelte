@@ -4,11 +4,13 @@
 	import { todoRecords } from '../store';
 
 	export let showFormular: Function;
+	export let handleRecordInspect: Function;
+
 	let wichtigNotDringend: EisenRecord[];
 	let wichtigDringed: EisenRecord[];
 	let notWichtigNotDringend: EisenRecord[];
 	let notWichtigDringend: EisenRecord[];
-	
+
 	todoRecords.subscribe((records) => {
 		wichtigNotDringend = records.filter((ele) => ele.importance == 'high' && !isUrgent(ele));
 		wichtigDringed = records.filter((ele) => ele.importance == 'high' && isUrgent(ele));
@@ -20,19 +22,19 @@
 		switch (record.requiredTime) {
 			case 'seconds' || 'minutes' || 'hours':
 				// Datediff bigger than a Day
-				if (dayBetweenDates(record.endDate, new Date()) <= 1) return true;
+				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 1) return true;
 				break;
 			case 'days':
 				// Datediff bigger than a weak
-				if (dayBetweenDates(record.endDate, new Date()) <= 7) return true;
+				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 7) return true;
 				break;
 			case 'weeks':
 				// Datediff bigger than a Month
-				if (dayBetweenDates(record.endDate, new Date()) <= 31) return true;
+				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 31) return true;
 				break;
 			case 'months':
 				// Datediff bigger than a year
-				if (dayBetweenDates(record.endDate, new Date()) <= 365) return true;
+				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 365) return true;
 				break;
 			default:
 				break;
@@ -47,25 +49,25 @@
 		<div class="grid grid-cols-2 w-full">
 			<div class="border min-h-40">
 				{#each wichtigNotDringend as record}
-					<EisenRecordComp bind:record />
+					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each wichtigDringed as record}
-					<EisenRecordComp bind:record />
+					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigNotDringend as record}
-					<EisenRecordComp bind:record />
+					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigDringend as record}
-					<EisenRecordComp bind:record />
+					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
