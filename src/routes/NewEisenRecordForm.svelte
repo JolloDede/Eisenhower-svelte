@@ -17,7 +17,7 @@
 		formClose();
 	}
 
-	$: dateStr = eisenRecord.endDateStr.toJSON().slice(0, 10);
+	$: dateStr = eisenRecord.endDateStr.slice(0, 10);
 	$: eisenRecord.importance = importance;
 </script>
 

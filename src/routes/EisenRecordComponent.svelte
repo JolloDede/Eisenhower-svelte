@@ -18,7 +18,6 @@
 	function saveRecord() {
 		if (record.id == 0) {
 			record.id = newRecordIndex();
-			console.log(record)
 			todoRecords.update((records) => {
 				return [...records, { ...record }];
 			});
