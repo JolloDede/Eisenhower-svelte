@@ -1,32 +1,49 @@
 <script lang="ts">
-	import Modal from '$lib/Modal.svelte';
-	import NewItemButton from '$lib/NewItemButton.svelte';
-	import NewEisenRecordForm from './NewEisenRecordForm.svelte';
+	import EisenQuadrat from './EisenQuadrat.svelte';
+	import EisenRecordComponent from './EisenRecordComponent.svelte';
 
-	let showModal = false;
+	let show = false;
+	let selectedRecord: EisenRecord = {
+		id: 0,
+		title: '',
+		description: '',
+		endDateStr: new Date().toJSON(),
+		importance: 'low',
+		requiredTime: 'minutes'
+	};
 
-	function showFormular() {
-		showModal = true;
+	function showFormular(urg: Importance) {
+		clearRecord();
+		selectedRecord.importance = urg;
+		show = true;
+	}
+
+	function clearRecord() {
+		selectedRecord = {
+			id: 0,
+			title: '',
+			description: '',
+			requiredTime: 'minutes',
+			endDateStr: new Date().toJSON(),
+			importance: 'low'
+		};
+	}
+
+	function formClose() {
+		clearRecord();
+		show = false;
+	}
+
+	function handleRecordInspect(record: EisenRecord) {
+		selectedRecord = record;
+		show = true;
 	}
 </script>
 
 <div class="m-auto w-4/5">
 	<div class="">
-		<h1>Einsenhower</h1>
-		<div class="flex mt-4">
-			<div class="flex items-center"><p class="-rotate-90">Wichtigkeit</p></div>
-			<div class="flex-grow">
-				<div class="grid grid-cols-2 w-full">
-					<div class="border min-h-40"><NewItemButton on:click={showFormular} /></div>
-					<div class="border min-h-40"><NewItemButton on:click={showFormular} /></div>
-					<div class="border min-h-40"><NewItemButton on:click={showFormular} /></div>
-					<div class="border min-h-40"><NewItemButton on:click={showFormular} /></div>
-				</div>
-				<p class="text-center">Dringlichkeit</p>
-			</div>
-		</div>
+		<h1>Eisenhower</h1>
+		<EisenQuadrat {showFormular} {handleRecordInspect} />
 	</div>
-	<Modal bind:showModal>
-		<NewEisenRecordForm />
-	</Modal>
+	<EisenRecordComponent bind:record={selectedRecord} bind:show />
 </div>

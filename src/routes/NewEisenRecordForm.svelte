@@ -1,33 +1,89 @@
 <script lang="ts">
-	let eisenRecord: EisenRecord = {
-		id: 0,
-		title: '',
-		description: '',
-		endDate: new Date(),
-		severity: 'none'
-	};
+	import { todoRecords } from "../store";
+
+	export let importance: Importance;
+	export let formClose: Function;
+	export let eisenRecord: EisenRecord;
+
+	function dateInputChange(e: any) {
+		eisenRecord.endDateStr = e.target.value || eisenRecord.endDateStr;
+	}
+
+	function saveRecord() {
+		// change the id to someting random
+		todoRecords.update((records) => {
+			return [...records, { ...eisenRecord }];
+		});
+		formClose();
+	}
+
+	$: dateStr = eisenRecord.endDateStr.slice(0, 10);
+	$: eisenRecord.importance = importance;
 </script>
 
-<form>
-	<div>
+<form class="grid w-96 m-4">
+	<h1 class="text-lg font-bold">New Record</h1>
+	<div class="">
 		<label for="title">Title</label>
-		<input type="text" id="title" value={eisenRecord.title} />
+		<!-- svelte-ignore a11y-autofocus -->
+		<input
+			type="text"
+			id="title"
+			class="block w-full border rounded-lg"
+			autofocus
+			bind:value={eisenRecord.title}
+		/>
 	</div>
 	<div>
 		<label for="description">Description</label>
-		<textarea id="description" value={eisenRecord.description}></textarea>
+		<textarea
+			id="description"
+			class="block w-full border rounded-lg resize-none"
+			bind:value={eisenRecord.description}
+		></textarea>
+	</div>
+	<div>
+		<label for="required-time">Required Time</label>
+		<select
+			id="required-time"
+			class="block w-full p-2 bg-white border rounded-lg"
+			bind:value={eisenRecord.requiredTime}
+		>
+			<option value="seconds">seconds</option>
+			<option value="minutes">minutes</option>
+			<option value="hours">hours</option>
+			<option value="days">days</option>
+			<option value="weeks">weeks</option>
+			<option value="months">months</option>
+		</select>
 	</div>
 	<div>
 		<label for="endDate">end date</label>
-		<input type="datetime" id="endDate" value={eisenRecord.endDate} />
+		<input
+			type="date"
+			id="endDate"
+			class="block border rounded-lg"
+			value={dateStr}
+			on:input={dateInputChange}
+		/>
 	</div>
 	<div>
-		<label for="severity">severity</label>
-		<select id="severity" value={eisenRecord.severity}>
-			<option value="none"></option>
+		<label for="urgency">Urgency</label>
+		<select
+			id="urgency"
+			class="block w-full p-2 bg-white border rounded-lg"
+			bind:value={eisenRecord.importance}
+		>
+			<!-- <option value="none"></option> -->
 			<option value="high">High</option>
-			<option value="medium">Medium</option>
+			<!-- <option value="medium">Medium</option> -->
 			<option value="low">Low</option>
 		</select>
+	</div>
+	<div class="flex justify-end pt-4">
+		<button on:click={() => saveRecord()} class="bg-blue-400 p-2 border rounded-lg"
+			>Create</button
+		>
+		<button on:click={() => formClose()} class="p-2 border rounded-lg">Cancel</button>
 	</div>
 </form>
