@@ -10,7 +10,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'High Today',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate),
+        endDateStr: JSON.stringify(currentDate).slice(1,25),
         importance: 'high'
     },
     {
@@ -18,7 +18,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Low Today',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate),
+        endDateStr: JSON.stringify(currentDate).slice(1,25),
         importance: 'low'
     },
     {
@@ -26,7 +26,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'High Weekago',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+        endDateStr: JSON.stringify(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)).slice(1,25),
         importance: 'high'
     },
     {
@@ -34,7 +34,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Low Weekago',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
+        endDateStr: JSON.stringify(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)).slice(1,25),
         importance: 'low'
     }
 ]);

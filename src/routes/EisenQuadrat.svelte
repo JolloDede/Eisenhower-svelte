@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { NewItemButton } from '$lib';
-	import EisenRecordComp from './EisenRecordComp.svelte';
+	import EisenRecordElement from './EisenRecordElement.svelte';
 	import { todoRecords } from '../store';
 
 	export let showFormular: Function;
@@ -49,25 +49,25 @@
 		<div class="grid grid-cols-2 w-full">
 			<div class="border min-h-40">
 				{#each wichtigNotDringend as record}
-					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
+					<EisenRecordElement recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each wichtigDringed as record}
-					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
+					<EisenRecordElement recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('high')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigNotDringend as record}
-					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
+					<EisenRecordElement recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>
 			<div class="border min-h-40">
 				{#each notWichtigDringend as record}
-					<EisenRecordComp recordClick={handleRecordInspect} bind:record />
+					<EisenRecordElement recordClick={handleRecordInspect} bind:record />
 				{/each}
 				<NewItemButton on:click={() => showFormular('low')} />
 			</div>

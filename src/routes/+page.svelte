@@ -38,6 +38,7 @@
 		selectedRecord = record;
 		show = true;
 	}
+
 </script>
 
 <div class="m-auto w-4/5">
