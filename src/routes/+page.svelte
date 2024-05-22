@@ -29,11 +29,6 @@
 		};
 	}
 
-	function formClose() {
-		clearRecord();
-		show = false;
-	}
-
 	function handleRecordInspect(record: EisenRecord) {
 		selectedRecord = record;
 		show = true;

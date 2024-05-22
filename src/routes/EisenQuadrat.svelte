@@ -2,6 +2,7 @@
 	import { NewItemButton } from '$lib';
 	import EisenRecordElement from './EisenRecordElement.svelte';
 	import { todoRecords } from '../store';
+	import { dayBetweenDates } from '../utils';
 
 	export let showFormular: Function;
 	export let handleRecordInspect: Function;
@@ -20,8 +21,10 @@
 
 	function isUrgent(record: EisenRecord): boolean {
 		switch (record.requiredTime) {
-			case 'seconds' || 'minutes' || 'hours':
-				// Datediff bigger than a Day
+			case 'seconds':
+			case 'minutes':
+			case 'hours':
+				// Datediff smaller than a Day
 				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 1) return true;
 				break;
 			case 'days':

@@ -7,15 +7,15 @@ let currentDate = new Date();
 export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
     {
         id: 1,
-        title: 'High Today',
+        title: 'Bot Left',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate).slice(1,25),
-        importance: 'high'
+        endDateStr: JSON.stringify(new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000)).slice(1,25),
+        importance: 'low'
     },
     {
         id: 2,
-        title: 'Low Today',
+        title: 'Bot Right',
         description: 'test desc',
         requiredTime: 'hours',
         endDateStr: JSON.stringify(currentDate).slice(1,25),
@@ -23,19 +23,19 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
     },
     {
         id: 3,
-        title: 'High Weekago',
+        title: 'Top Left',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)).slice(1,25),
+        endDateStr: JSON.stringify(new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000)).slice(1,25),
         importance: 'high'
     },
     {
         id: 4,
-        title: 'Low Weekago',
+        title: 'Top Right',
         description: 'test desc',
         requiredTime: 'hours',
         endDateStr: JSON.stringify(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)).slice(1,25),
-        importance: 'low'
+        importance: 'high'
     }
 ]);
 
