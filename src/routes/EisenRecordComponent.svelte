@@ -12,7 +12,8 @@
 	}
 
 	function dateInputChange(e: any) {
-		record.endDateStr = e.target.value || record.endDateStr;
+		dateStr = e.target.value || record.endDate.toJSON().slice(0,10);
+		// record.endDate = new Date(e.target.value) || record.endDate;
 	}
 
 	function saveRecord() {
@@ -22,12 +23,13 @@
 				return [...records, { ...record }];
 			});
 		} else {
+			record.endDate = new Date(dateStr);
 		}
 		show = false;
 	}
 
     $: { (record.id == 0) ? editing = true : editing = false };
-	$: dateStr = record.endDateStr.slice(0, 10);
+	$: dateStr = record.endDate.toJSON().slice(0, 10);
 </script>
 
 <Modal bind:show>
@@ -114,7 +116,7 @@
 			</div>
 			<p>Wichtigkeit: {record.importance}</p>
 			<p>Benötigte Zeit: {record.requiredTime}</p>
-			<p>Datum: {new Date(record.endDateStr).toLocaleDateString()}</p>
+			<p>Datum: {record.endDate.toLocaleDateString()}</p>
 		</div>
 	{/if}
 </Modal>

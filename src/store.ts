@@ -1,5 +1,6 @@
 import { persisted } from "svelte-persisted-store";
 import { get } from "svelte/store";
+import * as devalue from 'devalue';
 
 let STORAGE_KEY = 'Eisenhover-app-';
 let currentDate = new Date();
@@ -10,7 +11,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Bot Left',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000)).slice(1,25),
+        endDate: new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000),
         importance: 'low'
     },
     {
@@ -18,7 +19,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Bot Right',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(currentDate).slice(1,25),
+        endDate: currentDate,
         importance: 'low'
     },
     {
@@ -26,7 +27,7 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Top Left',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000)).slice(1,25),
+        endDate: new Date(currentDate.getTime() + 2 * 24 * 60 * 60 * 1000),
         importance: 'high'
     },
     {
@@ -34,15 +35,15 @@ export const todoRecords = persisted<EisenRecord[]>(STORAGE_KEY + 'records', [
         title: 'Top Right',
         description: 'test desc',
         requiredTime: 'hours',
-        endDateStr: JSON.stringify(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)).slice(1,25),
+        endDate: new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000),
         importance: 'high'
     }
-]);
+], { serializer: devalue });
 
 export const recordIndex = persisted(STORAGE_KEY + 'record-id', 5);
 
 export function newRecordIndex(): number {
-    let newVal = get(recordIndex)+1
+    let newVal = get(recordIndex) + 1
     recordIndex.set(newVal);
     return newVal;
 }

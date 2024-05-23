@@ -7,7 +7,7 @@
 		id: 0,
 		title: '',
 		description: '',
-		endDateStr: new Date().toJSON(),
+		endDate: new Date(),
 		importance: 'low',
 		requiredTime: 'minutes'
 	};
@@ -24,7 +24,7 @@
 			title: '',
 			description: '',
 			requiredTime: 'minutes',
-			endDateStr: new Date().toJSON(),
+			endDate: new Date(),
 			importance: 'low'
 		};
 	}

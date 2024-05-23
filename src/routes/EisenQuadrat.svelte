@@ -25,19 +25,19 @@
 			case 'minutes':
 			case 'hours':
 				// Datediff smaller than a Day
-				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 1) return true;
+				if (dayBetweenDates(record.endDate, new Date()) <= 1) return true;
 				break;
 			case 'days':
 				// Datediff bigger than a weak
-				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 7) return true;
+				if (dayBetweenDates(record.endDate, new Date()) <= 7) return true;
 				break;
 			case 'weeks':
 				// Datediff bigger than a Month
-				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 31) return true;
+				if (dayBetweenDates(record.endDate, new Date()) <= 31) return true;
 				break;
 			case 'months':
 				// Datediff bigger than a year
-				if (dayBetweenDates(new Date(record.endDateStr), new Date()) <= 365) return true;
+				if (dayBetweenDates(record.endDate, new Date()) <= 365) return true;
 				break;
 			default:
 				break;
