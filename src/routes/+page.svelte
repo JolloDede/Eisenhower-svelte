@@ -1,5 +1,6 @@
 <script lang="ts">
-	import EisenQuadrat from './EisenQuadrat.svelte';
+	import Card from '$lib/Card.svelte';
+import EisenQuadrat from './EisenQuadrat.svelte';
 	import EisenRecordComponent from './EisenRecordComponent.svelte';
 
 	let show = false;
