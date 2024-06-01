@@ -6,8 +6,7 @@
 
 	export let record: EisenRecord;
 	export let show: boolean;
-
-	let editing = false;
+	export let editing = false;
 
 	function handleEditClick() {
 		editing = true;
@@ -15,10 +14,6 @@
 
 	function formClose() {
 		show = false;
-	}
-
-	$: {
-		record.id == 0 ? (editing = true) : (editing = false);
 	}
 </script>
 

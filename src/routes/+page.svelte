@@ -1,6 +1,5 @@
 <script lang="ts">
-	import Card from '$lib/Card.svelte';
-import EisenQuadrat from './EisenQuadrat.svelte';
+	import EisenQuadrat from './EisenQuadrat.svelte';
 	import EisenRecordComponent from './EisenRecordComponent.svelte';
 
 	let show = false;
@@ -12,8 +11,10 @@ import EisenQuadrat from './EisenQuadrat.svelte';
 		importance: 'low',
 		requiredTime: 'minutes'
 	};
+	let initial = false;
 
 	function showFormular(urg: Importance) {
+		initial = true;
 		clearRecord();
 		selectedRecord.importance = urg;
 		show = true;
@@ -31,10 +32,10 @@ import EisenQuadrat from './EisenQuadrat.svelte';
 	}
 
 	function handleRecordInspect(record: EisenRecord) {
+		initial = false;
 		selectedRecord = record;
 		show = true;
 	}
-
 </script>
 
 <div class="m-auto w-4/5">
@@ -42,5 +43,5 @@ import EisenQuadrat from './EisenQuadrat.svelte';
 		<h1>Eisenhower</h1>
 		<EisenQuadrat {showFormular} {handleRecordInspect} />
 	</div>
-	<EisenRecordComponent bind:record={selectedRecord} bind:show />
+	<EisenRecordComponent bind:record={selectedRecord} bind:show bind:editing={initial} />
 </div>
