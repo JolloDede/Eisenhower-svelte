@@ -1,27 +1,34 @@
 <script lang="ts">
-	import { todoRecords } from "../store";
+	import { newRecordIndex, todoRecords } from '../store';
 
-	export let importance: Importance;
+	export let record: EisenRecord;
 	export let formClose: Function;
-	export let eisenRecord: EisenRecord;
-
-	function dateInputChange(e: any) {
-		eisenRecord.endDateStr = e.target.value || eisenRecord.endDateStr;
-	}
 
 	function saveRecord() {
-		// change the id to someting random
-		todoRecords.update((records) => {
-			return [...records, { ...eisenRecord }];
-		});
+		if (record.id == 0) {
+			record.id = newRecordIndex();
+			todoRecords.update((records) => {
+				return [...records, { ...record }];
+			});
+		} else {
+			record.endDate = new Date(dateStr);
+			todoRecords.update((records) => {
+				records.map(rec => { if (rec.id == record.id) rec.endDate = new Date(dateStr)})
+				return [...records];
+			})
+		}
 		formClose();
 	}
 
-	$: dateStr = eisenRecord.endDateStr.slice(0, 10);
-	$: eisenRecord.importance = importance;
+	function dateInputChange(e: any) {
+		dateStr = e.target.value || record.endDate.toJSON().slice(0, 10);
+		// record.endDate = new Date(e.target.value) || record.endDate;
+	}
+
+	$: dateStr = record.endDate.toJSON().slice(0, 10);
 </script>
 
-<form class="grid w-96 m-4">
+<form class="p-6">
 	<h1 class="text-lg font-bold">New Record</h1>
 	<div class="">
 		<label for="title">Title</label>
@@ -31,7 +38,7 @@
 			id="title"
 			class="block w-full border rounded-lg"
 			autofocus
-			bind:value={eisenRecord.title}
+			bind:value={record.title}
 		/>
 	</div>
 	<div>
@@ -39,7 +46,7 @@
 		<textarea
 			id="description"
 			class="block w-full border rounded-lg resize-none"
-			bind:value={eisenRecord.description}
+			bind:value={record.description}
 		></textarea>
 	</div>
 	<div>
@@ -47,7 +54,7 @@
 		<select
 			id="required-time"
 			class="block w-full p-2 bg-white border rounded-lg"
-			bind:value={eisenRecord.requiredTime}
+			bind:value={record.requiredTime}
 		>
 			<option value="seconds">seconds</option>
 			<option value="minutes">minutes</option>
@@ -72,7 +79,7 @@
 		<select
 			id="urgency"
 			class="block w-full p-2 bg-white border rounded-lg"
-			bind:value={eisenRecord.importance}
+			bind:value={record.importance}
 		>
 			<!-- <option value="none"></option> -->
 			<option value="high">High</option>
@@ -81,9 +88,7 @@
 		</select>
 	</div>
 	<div class="flex justify-end pt-4">
-		<button on:click={() => saveRecord()} class="bg-blue-400 p-2 border rounded-lg"
-			>Create</button
-		>
+		<button on:click={saveRecord} class="bg-blue-400 p-2 border rounded-lg">Create</button>
 		<button on:click={() => formClose()} class="p-2 border rounded-lg">Cancel</button>
 	</div>
 </form>

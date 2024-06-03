@@ -7,12 +7,14 @@
 		id: 0,
 		title: '',
 		description: '',
-		endDateStr: new Date().toJSON(),
+		endDate: new Date(),
 		importance: 'low',
 		requiredTime: 'minutes'
 	};
+	let initial = false;
 
 	function showFormular(urg: Importance) {
+		initial = true;
 		clearRecord();
 		selectedRecord.importance = urg;
 		show = true;
@@ -24,17 +26,13 @@
 			title: '',
 			description: '',
 			requiredTime: 'minutes',
-			endDateStr: new Date().toJSON(),
+			endDate: new Date(),
 			importance: 'low'
 		};
 	}
 
-	function formClose() {
-		clearRecord();
-		show = false;
-	}
-
 	function handleRecordInspect(record: EisenRecord) {
+		initial = false;
 		selectedRecord = record;
 		show = true;
 	}
@@ -45,5 +43,5 @@
 		<h1>Eisenhower</h1>
 		<EisenQuadrat {showFormular} {handleRecordInspect} />
 	</div>
-	<EisenRecordComponent bind:record={selectedRecord} bind:show />
+	<EisenRecordComponent bind:record={selectedRecord} bind:show bind:editing={initial} />
 </div>
