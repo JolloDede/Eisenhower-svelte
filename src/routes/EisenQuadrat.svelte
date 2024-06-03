@@ -44,6 +44,7 @@
 		}
 		return false;
 	}
+	$: console.log(todoRecords)
 </script>
 
 <div class="flex mt-4">

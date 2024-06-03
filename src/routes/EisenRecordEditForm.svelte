@@ -12,6 +12,10 @@
 			});
 		} else {
 			record.endDate = new Date(dateStr);
+			todoRecords.update((records) => {
+				records.map(rec => { if (rec.id == record.id) rec.endDate = new Date(dateStr)})
+				return [...records];
+			})
 		}
 		formClose();
 	}
